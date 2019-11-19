@@ -38,7 +38,7 @@
 
 <div class="w3-container w3-half w3-margin-top" style="height:200px;">
   <div class="w3-container w3-display-middle w3-card-4 alata">
-    <h5 class="w3-center ">Login Page</h5>
+    <h5 class="w3-center alata">Login Page</h5>
 
     <form on:submit|preventDefault={handleSubmit} class="w3-container ">
       <label>User CODE</label>
@@ -58,7 +58,7 @@
         class="w3-input" />
 
       <p>
-        <button type="submit" class="w3-button w3-blue">Login</button>
+        <button type="submit" class="w3-button w3-blue alata">Login</button>
       </p>
     </form>
   </div>

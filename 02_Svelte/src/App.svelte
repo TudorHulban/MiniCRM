@@ -3,4 +3,5 @@
   import { routes } from "./routes/routes";
 </script>
 
+<svelte:head />
 <Router {routes} />
