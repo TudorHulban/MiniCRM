@@ -43,6 +43,10 @@ var app = (function () {
     function space() {
         return text(' ');
     }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -281,6 +285,19 @@ var app = (function () {
         dispatch_dev("SvelteDOMRemove", { node });
         detach(node);
     }
+    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation) {
+        const modifiers = options === true ? ["capture"] : options ? Array.from(Object.keys(options)) : [];
+        if (has_prevent_default)
+            modifiers.push('preventDefault');
+        if (has_stop_propagation)
+            modifiers.push('stopPropagation');
+        dispatch_dev("SvelteDOMAddEventListener", { node, event, handler, modifiers });
+        const dispose = listen(node, event, handler, options);
+        return () => {
+            dispatch_dev("SvelteDOMRemoveEventListener", { node, event, handler, modifiers });
+            dispose();
+        };
+    }
     function attr_dev(node, attribute, value) {
         attr(node, attribute, value);
         if (value == null)
@@ -323,17 +340,17 @@ var app = (function () {
     			t0 = space();
     			nav = element("nav");
     			a0 = element("a");
-    			a0.textContent = "FORUM";
+    			a0.textContent = "Link 1";
     			t2 = text("\n    |\n    ");
     			a1 = element("a");
-    			a1.textContent = "ABOUT";
+    			a1.textContent = "Link 2";
     			add_location(p, file, 2, 2, 87);
-    			attr_dev(a0, "href", "/forum/default.asp");
+    			attr_dev(a0, "href", "#");
     			attr_dev(a0, "target", "_blank");
     			add_location(a0, file, 4, 4, 105);
-    			attr_dev(a1, "href", "/about/default.asp");
+    			attr_dev(a1, "href", "#");
     			attr_dev(a1, "target", "_top");
-    			add_location(a1, file, 6, 4, 170);
+    			add_location(a1, file, 6, 4, 154);
     			add_location(nav, file, 3, 2, 95);
     			attr_dev(footer, "class", "w3-container w3-padding-large w3-light-grey w3-justify w3-opacity");
     			add_location(footer, file, 0, 0, 0);
@@ -402,16 +419,16 @@ var app = (function () {
     		c: function create() {
     			header = element("header");
     			h1 = element("h1");
-    			h1.textContent = "W3Schools.com";
+    			h1.textContent = "Header";
     			t1 = space();
     			div0 = element("div");
     			a0 = element("a");
-    			a0.textContent = "Try it Yourself";
+    			a0.textContent = "Section 1";
     			t3 = space();
     			div1 = element("div");
     			p = element("p");
     			a1 = element("a");
-    			a1.textContent = "Try it Yourself";
+    			a1.textContent = "Section 2";
     			attr_dev(h1, "class", "w3-xxxlarge w3-padding-16");
     			add_location(h1, file$1, 1, 2, 65);
     			attr_dev(header, "class", "w3-container w3-theme w3-padding-64 w3-center");
@@ -419,16 +436,16 @@ var app = (function () {
     			attr_dev(a0, "class", "w3-button w3-theme w3-hover-white");
     			attr_dev(a0, "href", "/css/tryit.asp?filename=trycss_default");
     			attr_dev(a0, "target", "_blank");
-    			add_location(a0, file$1, 5, 2, 204);
+    			add_location(a0, file$1, 5, 2, 197);
     			attr_dev(div0, "class", "w3-container w3-padding-large w3-section w3-light-grey");
-    			add_location(div0, file$1, 4, 0, 133);
+    			add_location(div0, file$1, 4, 0, 126);
     			attr_dev(a1, "class", "w3-button w3-theme w3-hover-white");
     			attr_dev(a1, "href", "/js/tryit.asp?filename=tryjs_default");
     			attr_dev(a1, "target", "_blank");
-    			add_location(a1, file$1, 15, 4, 438);
-    			add_location(p, file$1, 14, 2, 430);
+    			add_location(a1, file$1, 15, 4, 425);
+    			add_location(p, file$1, 14, 2, 417);
     			attr_dev(div1, "class", "w3-container w3-padding-large w3-section w3-light-grey");
-    			add_location(div1, file$1, 13, 0, 359);
+    			add_location(div1, file$1, 13, 0, 346);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -485,7 +502,7 @@ var app = (function () {
     const file$2 = "src/components/sidebar.svelte";
 
     function create_fragment$2(ctx) {
-    	let div4;
+    	let div3;
     	let div0;
     	let a0;
     	let i0;
@@ -497,43 +514,22 @@ var app = (function () {
     	let a2;
     	let t3;
     	let a3;
-    	let img;
-    	let img_src_value;
-    	let t4;
+    	let t5;
     	let a4;
-    	let t6;
-    	let a5;
-    	let t8;
-    	let a6;
-    	let t10;
-    	let a7;
-    	let t12;
-    	let a8;
-    	let t14;
-    	let div3;
+    	let t7;
     	let div2;
-    	let h1;
-    	let t16;
-    	let ul;
-    	let li0;
-    	let t18;
-    	let li1;
-    	let t20;
-    	let li2;
-    	let t22;
-    	let li3;
-    	let t24;
-    	let li4;
-    	let t26;
-    	let li5;
-    	let t28;
-    	let li6;
-    	let t30;
-    	let div5;
+    	let a5;
+    	let t9;
+    	let a6;
+    	let t11;
+    	let a7;
+    	let t13;
+    	let div4;
+    	let dispose;
 
     	const block = {
     		c: function create() {
-    			div4 = element("div");
+    			div3 = element("div");
     			div0 = element("div");
     			a0 = element("a");
     			i0 = element("i");
@@ -543,187 +539,117 @@ var app = (function () {
     			t1 = space();
     			div1 = element("div");
     			a2 = element("a");
-    			a2.textContent = "�";
+    			a2.textContent = "x";
     			t3 = space();
     			a3 = element("a");
-    			img = element("img");
-    			t4 = space();
+    			a3.textContent = "Option 1";
+    			t5 = space();
     			a4 = element("a");
-    			a4.textContent = "Learn HTML";
-    			t6 = space();
-    			a5 = element("a");
-    			a5.textContent = "Learn W3.CSS";
-    			t8 = space();
-    			a6 = element("a");
-    			a6.textContent = "Learn JavaScript";
-    			t10 = space();
-    			a7 = element("a");
-    			a7.textContent = "Learn SQL";
-    			t12 = space();
-    			a8 = element("a");
-    			a8.textContent = "Learn PHP";
-    			t14 = space();
-    			div3 = element("div");
+    			a4.textContent = "Option 2";
+    			t7 = space();
     			div2 = element("div");
-    			h1 = element("h1");
-    			h1.textContent = "W3.CSS";
-    			t16 = space();
-    			ul = element("ul");
-    			li0 = element("li");
-    			li0.textContent = "Smaller and faster";
-    			t18 = space();
-    			li1 = element("li");
-    			li1.textContent = "Easier to use";
-    			t20 = space();
-    			li2 = element("li");
-    			li2.textContent = "Easier to learn";
-    			t22 = space();
-    			li3 = element("li");
-    			li3.textContent = "CSS only";
-    			t24 = space();
-    			li4 = element("li");
-    			li4.textContent = "Speeds up apps";
-    			t26 = space();
-    			li5 = element("li");
-    			li5.textContent = "CSS equality for all";
-    			t28 = space();
-    			li6 = element("li");
-    			li6.textContent = "PC Laptop Tablet Mobile";
-    			t30 = space();
-    			div5 = element("div");
+    			a5 = element("a");
+    			a5.textContent = "x";
+    			t9 = space();
+    			a6 = element("a");
+    			a6.textContent = "Option 3";
+    			t11 = space();
+    			a7 = element("a");
+    			a7.textContent = "Option 4";
+    			t13 = space();
+    			div4 = element("div");
     			attr_dev(i0, "class", "fa fa-bars w3-xlarge");
-    			add_location(i0, file$2, 35, 6, 925);
+    			add_location(i0, file$2, 28, 6, 770);
     			attr_dev(a0, "class", "w3-bar-item w3-button");
     			set_style(a0, "width", "50%");
     			attr_dev(a0, "href", "javascript:void(0)");
-    			attr_dev(a0, "onclick", "openNav('nav01')");
-    			add_location(a0, file$2, 30, 4, 790);
-    			attr_dev(i1, "class", "fa fa-file w3-xlarge");
-    			add_location(i1, file$2, 42, 6, 1108);
+    			add_location(a0, file$2, 23, 4, 628);
+    			attr_dev(i1, "class", "fa fa-wrench w3-xlarge");
+    			add_location(i1, file$2, 35, 6, 960);
     			attr_dev(a1, "class", "w3-bar-item w3-button");
     			set_style(a1, "width", "50%");
     			attr_dev(a1, "href", "javascript:void(0)");
-    			attr_dev(a1, "onclick", "openNav('nav02')");
-    			add_location(a1, file$2, 37, 4, 973);
+    			add_location(a1, file$2, 30, 4, 818);
     			attr_dev(div0, "class", "w3-bar w3-black w3-center");
-    			add_location(div0, file$2, 29, 2, 746);
+    			add_location(div0, file$2, 22, 2, 584);
     			attr_dev(a2, "class", "w3-button w3-hover-teal w3-hide-large w3-large w3-right");
     			attr_dev(a2, "href", "javascript:void(0)");
-    			attr_dev(a2, "onclick", "w3_close()");
-    			add_location(a2, file$2, 47, 4, 1206);
-    			if (img.src !== (img_src_value = "https://www.w3schools.com/images/w3schools.png")) attr_dev(img, "src", img_src_value);
-    			set_style(img, "width", "80%");
-    			add_location(img, file$2, 54, 6, 1435);
-    			attr_dev(a3, "class", "w3-bar-item w3-button w3-border-bottom w3-large");
+    			add_location(a2, file$2, 40, 4, 1060);
+    			attr_dev(a3, "class", "w3-bar-item w3-button");
     			attr_dev(a3, "href", "#");
-    			add_location(a3, file$2, 53, 4, 1360);
+    			add_location(a3, file$2, 46, 4, 1213);
     			attr_dev(a4, "class", "w3-bar-item w3-button");
     			attr_dev(a4, "href", "#");
-    			add_location(a4, file$2, 58, 4, 1544);
-    			attr_dev(a5, "class", "w3-bar-item w3-button");
-    			attr_dev(a5, "href", "#");
-    			add_location(a5, file$2, 59, 4, 1605);
-    			attr_dev(a6, "class", "w3-bar-item w3-button");
-    			attr_dev(a6, "href", "#");
-    			add_location(a6, file$2, 60, 4, 1668);
-    			attr_dev(a7, "class", "w3-bar-item w3-button");
-    			attr_dev(a7, "href", "#");
-    			add_location(a7, file$2, 61, 4, 1735);
-    			attr_dev(a8, "class", "w3-bar-item w3-button");
-    			attr_dev(a8, "href", "#");
-    			add_location(a8, file$2, 62, 4, 1795);
+    			add_location(a4, file$2, 47, 4, 1272);
     			attr_dev(div1, "id", "nav01");
     			attr_dev(div1, "class", "w3-bar-block");
-    			add_location(div1, file$2, 46, 2, 1164);
-    			attr_dev(h1, "class", "w3-text-theme");
-    			add_location(h1, file$2, 67, 6, 1934);
-    			attr_dev(div2, "class", "w3-container w3-border-bottom");
-    			add_location(div2, file$2, 66, 4, 1884);
-    			attr_dev(li0, "class", "w3-padding-16");
-    			add_location(li0, file$2, 70, 6, 2021);
-    			attr_dev(li1, "class", "w3-padding-16");
-    			add_location(li1, file$2, 71, 6, 2077);
-    			attr_dev(li2, "class", "w3-padding-16");
-    			add_location(li2, file$2, 72, 6, 2128);
-    			attr_dev(li3, "class", "w3-padding-16");
-    			add_location(li3, file$2, 73, 6, 2181);
-    			attr_dev(li4, "class", "w3-padding-16");
-    			add_location(li4, file$2, 74, 6, 2227);
-    			attr_dev(li5, "class", "w3-padding-16");
-    			add_location(li5, file$2, 75, 6, 2279);
-    			attr_dev(li6, "class", "w3-padding-16");
-    			add_location(li6, file$2, 76, 6, 2337);
-    			attr_dev(ul, "class", "w3-ul w3-large");
-    			add_location(ul, file$2, 69, 4, 1987);
-    			attr_dev(div3, "id", "nav02");
-    			add_location(div3, file$2, 65, 2, 1863);
-    			attr_dev(div4, "class", "w3-sidebar w3-collapse w3-white w3-large");
-    			set_style(div4, "z-index", "3");
-    			set_style(div4, "width", "250px");
-    			attr_dev(div4, "id", "mySidebar");
-    			add_location(div4, file$2, 24, 0, 636);
-    			attr_dev(div5, "class", "w3-overlay w3-hide-large");
-    			attr_dev(div5, "onclick", "w3_close()");
-    			set_style(div5, "cursor", "pointer");
-    			attr_dev(div5, "id", "myOverlay");
-    			add_location(div5, file$2, 81, 0, 2419);
+    			add_location(div1, file$2, 39, 2, 1018);
+    			attr_dev(a5, "class", "w3-button w3-hover-teal w3-hide-large w3-large w3-right");
+    			attr_dev(a5, "href", "javascript:void(0)");
+    			add_location(a5, file$2, 51, 4, 1381);
+    			attr_dev(a6, "class", "w3-bar-item w3-button");
+    			attr_dev(a6, "href", "#");
+    			add_location(a6, file$2, 57, 4, 1534);
+    			attr_dev(a7, "class", "w3-bar-item w3-button");
+    			attr_dev(a7, "href", "#");
+    			add_location(a7, file$2, 58, 4, 1593);
+    			attr_dev(div2, "id", "nav02");
+    			attr_dev(div2, "class", "w3-bar-block");
+    			add_location(div2, file$2, 50, 2, 1339);
+    			attr_dev(div3, "class", "w3-sidebar w3-collapse w3-white w3-large");
+    			set_style(div3, "z-index", "3");
+    			set_style(div3, "width", "250px");
+    			attr_dev(div3, "id", "mySidebar");
+    			add_location(div3, file$2, 17, 0, 474);
+    			attr_dev(div4, "class", "w3-overlay w3-hide-large");
+    			set_style(div4, "cursor", "pointer");
+    			attr_dev(div4, "id", "myOverlay");
+    			add_location(div4, file$2, 62, 0, 1665);
+
+    			dispose = [
+    				listen_dev(a0, "click", ctx.click_handler, false, false, false),
+    				listen_dev(a1, "click", ctx.click_handler_1, false, false, false),
+    				listen_dev(a2, "click", w3_close, false, false, false),
+    				listen_dev(a5, "click", w3_close, false, false, false),
+    				listen_dev(div4, "click", w3_close, false, false, false)
+    			];
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div4, anchor);
-    			append_dev(div4, div0);
+    			insert_dev(target, div3, anchor);
+    			append_dev(div3, div0);
     			append_dev(div0, a0);
     			append_dev(a0, i0);
     			append_dev(div0, t0);
     			append_dev(div0, a1);
     			append_dev(a1, i1);
-    			append_dev(div4, t1);
-    			append_dev(div4, div1);
+    			append_dev(div3, t1);
+    			append_dev(div3, div1);
     			append_dev(div1, a2);
     			append_dev(div1, t3);
     			append_dev(div1, a3);
-    			append_dev(a3, img);
-    			append_dev(div1, t4);
+    			append_dev(div1, t5);
     			append_dev(div1, a4);
-    			append_dev(div1, t6);
-    			append_dev(div1, a5);
-    			append_dev(div1, t8);
-    			append_dev(div1, a6);
-    			append_dev(div1, t10);
-    			append_dev(div1, a7);
-    			append_dev(div1, t12);
-    			append_dev(div1, a8);
-    			append_dev(div4, t14);
-    			append_dev(div4, div3);
+    			append_dev(div3, t7);
     			append_dev(div3, div2);
-    			append_dev(div2, h1);
-    			append_dev(div3, t16);
-    			append_dev(div3, ul);
-    			append_dev(ul, li0);
-    			append_dev(ul, t18);
-    			append_dev(ul, li1);
-    			append_dev(ul, t20);
-    			append_dev(ul, li2);
-    			append_dev(ul, t22);
-    			append_dev(ul, li3);
-    			append_dev(ul, t24);
-    			append_dev(ul, li4);
-    			append_dev(ul, t26);
-    			append_dev(ul, li5);
-    			append_dev(ul, t28);
-    			append_dev(ul, li6);
-    			insert_dev(target, t30, anchor);
-    			insert_dev(target, div5, anchor);
+    			append_dev(div2, a5);
+    			append_dev(div2, t9);
+    			append_dev(div2, a6);
+    			append_dev(div2, t11);
+    			append_dev(div2, a7);
+    			insert_dev(target, t13, anchor);
+    			insert_dev(target, div4, anchor);
     		},
     		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div3);
+    			if (detaching) detach_dev(t13);
     			if (detaching) detach_dev(div4);
-    			if (detaching) detach_dev(t30);
-    			if (detaching) detach_dev(div5);
+    			run_all(dispose);
     		}
     	};
 
@@ -738,6 +664,11 @@ var app = (function () {
     	return block;
     }
 
+    function w3_close() {
+    	document.getElementById("mySidebar").style.display = "none";
+    	document.getElementById("myOverlay").style.display = "none";
+    }
+
     function openNav(id) {
     	document.getElementById("nav01").style.display = "none";
     	document.getElementById("nav02").style.display = "none";
@@ -749,6 +680,9 @@ var app = (function () {
     		openNav("nav01");
     	});
 
+    	const click_handler = () => openNav("nav01");
+    	const click_handler_1 = () => openNav("nav02");
+
     	$$self.$capture_state = () => {
     		return {};
     	};
@@ -757,7 +691,7 @@ var app = (function () {
     		
     	};
 
-    	return {};
+    	return { click_handler, click_handler_1 };
     }
 
     class Sidebar extends SvelteComponentDev {
@@ -785,6 +719,7 @@ var app = (function () {
     	let t1;
     	let t2;
     	let current;
+    	let dispose;
     	const sidebar = new Sidebar({ $$inline: true });
     	const main = new Main({ $$inline: true });
     	const footer = new Footer({ $$inline: true });
@@ -801,13 +736,13 @@ var app = (function () {
     			t2 = space();
     			create_component(footer.$$.fragment);
     			attr_dev(i, "class", "fa fa-bars w3-button w3-teal w3-xlarge");
-    			attr_dev(i, "onclick", "w3_open()");
-    			add_location(i, file$3, 11, 4, 304);
+    			add_location(i, file$3, 16, 4, 464);
     			attr_dev(div0, "class", "w3-top w3-theme w3-large w3-hide-large");
-    			add_location(div0, file$3, 10, 2, 247);
+    			add_location(div0, file$3, 15, 2, 407);
     			attr_dev(div1, "class", "w3-main w3-sand");
     			set_style(div1, "margin-left", "250px");
-    			add_location(div1, file$3, 8, 0, 187);
+    			add_location(div1, file$3, 13, 0, 347);
+    			dispose = listen_dev(i, "click", w3_open, false, false, false);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -844,6 +779,7 @@ var app = (function () {
     			if (detaching) detach_dev(div1);
     			destroy_component(main);
     			destroy_component(footer);
+    			dispose();
     		}
     	};
 
@@ -856,6 +792,11 @@ var app = (function () {
     	});
 
     	return block;
+    }
+
+    function w3_open() {
+    	document.getElementById("mySidebar").style.display = "block";
+    	document.getElementById("myOverlay").style.display = "block";
     }
 
     class Responsivew3 extends SvelteComponentDev {

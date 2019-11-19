@@ -1,22 +1,15 @@
 <script>
   import { onMount } from "svelte";
 
-  function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-  }
-
   function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
   }
-
   function openNav(id) {
     document.getElementById("nav01").style.display = "none";
     document.getElementById("nav02").style.display = "none";
     document.getElementById(id).style.display = "block";
   }
-
   onMount(function() {
     openNav("nav01");
   });
@@ -32,15 +25,15 @@
       class="w3-bar-item w3-button"
       style="width:50%"
       href="javascript:void(0)"
-      onclick="openNav('nav01')">
+      on:click={() => openNav('nav01')}>
       <i class="fa fa-bars w3-xlarge" />
     </a>
     <a
       class="w3-bar-item w3-button"
       style="width:50%"
       href="javascript:void(0)"
-      onclick="openNav('nav02')">
-      <i class="fa fa-file w3-xlarge" />
+      on:click={() => openNav('nav02')}>
+      <i class="fa fa-wrench w3-xlarge" />
     </a>
   </div>
 
@@ -48,39 +41,27 @@
     <a
       class="w3-button w3-hover-teal w3-hide-large w3-large w3-right"
       href="javascript:void(0)"
-      onclick="w3_close()">
-      �
+      on:click={w3_close}>
+      x
     </a>
-    <a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">
-      <img
-        src="https://www.w3schools.com/images/w3schools.png"
-        style="width:80%;" />
-    </a>
-    <a class="w3-bar-item w3-button" href="#">Learn HTML</a>
-    <a class="w3-bar-item w3-button" href="#">Learn W3.CSS</a>
-    <a class="w3-bar-item w3-button" href="#">Learn JavaScript</a>
-    <a class="w3-bar-item w3-button" href="#">Learn SQL</a>
-    <a class="w3-bar-item w3-button" href="#">Learn PHP</a>
+    <a class="w3-bar-item w3-button" href="#">Option 1</a>
+    <a class="w3-bar-item w3-button" href="#">Option 2</a>
   </div>
 
-  <div id="nav02">
-    <div class="w3-container w3-border-bottom">
-      <h1 class="w3-text-theme">W3.CSS</h1>
-    </div>
-    <ul class="w3-ul w3-large">
-      <li class="w3-padding-16">Smaller and faster</li>
-      <li class="w3-padding-16">Easier to use</li>
-      <li class="w3-padding-16">Easier to learn</li>
-      <li class="w3-padding-16">CSS only</li>
-      <li class="w3-padding-16">Speeds up apps</li>
-      <li class="w3-padding-16">CSS equality for all</li>
-      <li class="w3-padding-16">PC Laptop Tablet Mobile</li>
-    </ul>
+  <div id="nav02" class="w3-bar-block">
+    <a
+      class="w3-button w3-hover-teal w3-hide-large w3-large w3-right"
+      href="javascript:void(0)"
+      on:click={w3_close}>
+      x
+    </a>
+    <a class="w3-bar-item w3-button" href="#">Option 3</a>
+    <a class="w3-bar-item w3-button" href="#">Option 4</a>
   </div>
 </div>
 
 <div
   class="w3-overlay w3-hide-large"
-  onclick="w3_close()"
+  on:click={w3_close}
   style="cursor:pointer"
   id="myOverlay" />
