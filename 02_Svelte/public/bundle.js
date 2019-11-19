@@ -2314,30 +2314,30 @@ var app = (function () {
     const file$4 = "src/components/navbar.svelte";
 
     function create_fragment$6(ctx) {
-    	let header;
+    	let nav;
     	let h3;
 
     	const block = {
     		c: function create() {
-    			header = element("header");
+    			nav = element("nav");
     			h3 = element("h3");
-    			h3.textContent = "This is Header";
-    			add_location(h3, file$4, 1, 2, 40);
-    			attr_dev(header, "class", "w3-container w3-teal");
-    			add_location(header, file$4, 0, 0, 0);
+    			h3.textContent = "This is Navigation.";
+    			add_location(h3, file$4, 1, 2, 37);
+    			attr_dev(nav, "class", "w3-container w3-teal");
+    			add_location(nav, file$4, 0, 0, 0);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, header, anchor);
-    			append_dev(header, h3);
+    			insert_dev(target, nav, anchor);
+    			append_dev(nav, h3);
     		},
     		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(header);
+    			if (detaching) detach_dev(nav);
     		}
     	};
 
@@ -2372,15 +2372,28 @@ var app = (function () {
 
     function create_fragment$7(ctx) {
     	let footer;
-    	let h3;
+    	let nav;
+    	let a0;
+    	let t1;
+    	let a1;
 
     	const block = {
     		c: function create() {
     			footer = element("footer");
-    			h3 = element("h3");
-    			h3.textContent = "This is Footer";
-    			add_location(h3, file$5, 1, 2, 45);
-    			attr_dev(footer, "class", "w3-container w3-dark-grey");
+    			nav = element("nav");
+    			a0 = element("a");
+    			a0.textContent = "FORUM";
+    			t1 = space();
+    			a1 = element("a");
+    			a1.textContent = "ABOUT";
+    			attr_dev(a0, "href", "/forum/default.asp");
+    			attr_dev(a0, "target", "_blank");
+    			add_location(a0, file$5, 3, 4, 97);
+    			attr_dev(a1, "href", "/about/default.asp");
+    			attr_dev(a1, "target", "_top");
+    			add_location(a1, file$5, 4, 4, 156);
+    			add_location(nav, file$5, 2, 2, 87);
+    			attr_dev(footer, "class", "w3-container w3-padding-large w3-light-grey w3-justify w3-opacity");
     			add_location(footer, file$5, 0, 0, 0);
     		},
     		l: function claim(nodes) {
@@ -2388,7 +2401,10 @@ var app = (function () {
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, footer, anchor);
-    			append_dev(footer, h3);
+    			append_dev(footer, nav);
+    			append_dev(nav, a0);
+    			append_dev(nav, t1);
+    			append_dev(nav, a1);
     		},
     		p: noop,
     		i: noop,
@@ -2427,11 +2443,76 @@ var app = (function () {
     const file$6 = "src/layouts/admin_layout.svelte";
 
     function create_fragment$8(ctx) {
-    	let div;
+    	let div10;
     	let t0;
-    	let h1;
+    	let h10;
     	let t2;
     	let t3;
+    	let div4;
+    	let div0;
+    	let a0;
+    	let i0;
+    	let t4;
+    	let a1;
+    	let i1;
+    	let t5;
+    	let a2;
+    	let i2;
+    	let t6;
+    	let div1;
+    	let a3;
+    	let t8;
+    	let a4;
+    	let img;
+    	let img_src_value;
+    	let t9;
+    	let a5;
+    	let t11;
+    	let a6;
+    	let t13;
+    	let a7;
+    	let t15;
+    	let a8;
+    	let t17;
+    	let a9;
+    	let t19;
+    	let div3;
+    	let div2;
+    	let h11;
+    	let t21;
+    	let ul;
+    	let li0;
+    	let t23;
+    	let li1;
+    	let t25;
+    	let li2;
+    	let t27;
+    	let li3;
+    	let t29;
+    	let li4;
+    	let t31;
+    	let li5;
+    	let t33;
+    	let li6;
+    	let t35;
+    	let div5;
+    	let t36;
+    	let div9;
+    	let div6;
+    	let i3;
+    	let t37;
+    	let header;
+    	let h12;
+    	let t39;
+    	let div7;
+    	let a10;
+    	let t41;
+    	let div8;
+    	let p;
+    	let a11;
+    	let t43;
+    	let script;
+    	let t45;
     	let current;
     	const navbar = new Navbar({ $$inline: true });
 
@@ -2444,31 +2525,287 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div = element("div");
+    			div10 = element("div");
     			create_component(navbar.$$.fragment);
     			t0 = space();
-    			h1 = element("h1");
-    			h1.textContent = "Admin Layout";
+    			h10 = element("h1");
+    			h10.textContent = "Admin Layout";
     			t2 = space();
     			create_component(route.$$.fragment);
     			t3 = space();
+    			div4 = element("div");
+    			div0 = element("div");
+    			a0 = element("a");
+    			i0 = element("i");
+    			t4 = space();
+    			a1 = element("a");
+    			i1 = element("i");
+    			t5 = space();
+    			a2 = element("a");
+    			i2 = element("i");
+    			t6 = space();
+    			div1 = element("div");
+    			a3 = element("a");
+    			a3.textContent = "×";
+    			t8 = space();
+    			a4 = element("a");
+    			img = element("img");
+    			t9 = space();
+    			a5 = element("a");
+    			a5.textContent = "Learn HTML";
+    			t11 = space();
+    			a6 = element("a");
+    			a6.textContent = "Learn W3.CSS";
+    			t13 = space();
+    			a7 = element("a");
+    			a7.textContent = "Learn JavaScript";
+    			t15 = space();
+    			a8 = element("a");
+    			a8.textContent = "Learn SQL";
+    			t17 = space();
+    			a9 = element("a");
+    			a9.textContent = "Learn PHP";
+    			t19 = space();
+    			div3 = element("div");
+    			div2 = element("div");
+    			h11 = element("h1");
+    			h11.textContent = "W3.CSS";
+    			t21 = space();
+    			ul = element("ul");
+    			li0 = element("li");
+    			li0.textContent = "Smaller and faster";
+    			t23 = space();
+    			li1 = element("li");
+    			li1.textContent = "Easier to use";
+    			t25 = space();
+    			li2 = element("li");
+    			li2.textContent = "Easier to learn";
+    			t27 = space();
+    			li3 = element("li");
+    			li3.textContent = "CSS only";
+    			t29 = space();
+    			li4 = element("li");
+    			li4.textContent = "Speeds up apps";
+    			t31 = space();
+    			li5 = element("li");
+    			li5.textContent = "CSS equality for all";
+    			t33 = space();
+    			li6 = element("li");
+    			li6.textContent = "PC Laptop Tablet Mobile";
+    			t35 = space();
+    			div5 = element("div");
+    			t36 = space();
+    			div9 = element("div");
+    			div6 = element("div");
+    			i3 = element("i");
+    			t37 = space();
+    			header = element("header");
+    			h12 = element("h1");
+    			h12.textContent = "W3Schools.com";
+    			t39 = space();
+    			div7 = element("div");
+    			a10 = element("a");
+    			a10.textContent = "Try it Yourself";
+    			t41 = space();
+    			div8 = element("div");
+    			p = element("p");
+    			a11 = element("a");
+    			a11.textContent = "Try it Yourself";
+    			t43 = space();
+    			script = element("script");
+    			script.textContent = "function w3_open() {\n      document.getElementById(\"mySidebar\").style.display = \"block\";\n      document.getElementById(\"myOverlay\").style.display = \"block\";\n    }\n\n    function w3_close() {\n      document.getElementById(\"mySidebar\").style.display = \"none\";\n      document.getElementById(\"myOverlay\").style.display = \"none\";\n    }\n\n    openNav(\"nav01\");\n    function openNav(id) {\n      document.getElementById(\"nav01\").style.display = \"none\";\n      document.getElementById(\"nav02\").style.display = \"none\";\n      document.getElementById(\"nav03\").style.display = \"none\";\n      document.getElementById(id).style.display = \"block\";\n    }";
+    			t45 = space();
     			create_component(footer.$$.fragment);
-    			add_location(h1, file$6, 10, 2, 247);
-    			attr_dev(div, "class", "w3-container w3-sand");
-    			add_location(div, file$6, 8, 0, 197);
+    			add_location(h10, file$6, 10, 2, 247);
+    			attr_dev(i0, "class", "fa fa-bars w3-xlarge");
+    			add_location(i0, file$6, 24, 8, 627);
+    			attr_dev(a0, "class", "w3-bar-item w3-button");
+    			set_style(a0, "width", "33.33%");
+    			attr_dev(a0, "href", "javascript:void(0)");
+    			attr_dev(a0, "onclick", "openNav('nav01')");
+    			add_location(a0, file$6, 19, 6, 479);
+    			attr_dev(i1, "class", "fa fa-file w3-xlarge");
+    			add_location(i1, file$6, 31, 8, 827);
+    			attr_dev(a1, "class", "w3-bar-item w3-button");
+    			set_style(a1, "width", "33.33%");
+    			attr_dev(a1, "href", "javascript:void(0)");
+    			attr_dev(a1, "onclick", "openNav('nav03')");
+    			add_location(a1, file$6, 26, 6, 679);
+    			attr_dev(i2, "class", "fa fa-camera w3-xlarge");
+    			add_location(i2, file$6, 38, 8, 1027);
+    			attr_dev(a2, "class", "w3-bar-item w3-button");
+    			set_style(a2, "width", "33.33%");
+    			attr_dev(a2, "href", "javascript:void(0)");
+    			attr_dev(a2, "onclick", "openNav('nav02')");
+    			add_location(a2, file$6, 33, 6, 879);
+    			attr_dev(div0, "class", "w3-bar w3-black w3-center");
+    			add_location(div0, file$6, 18, 4, 433);
+    			attr_dev(a3, "class", "w3-button w3-hover-teal w3-hide-large w3-large w3-right");
+    			attr_dev(a3, "href", "javascript:void(0)");
+    			attr_dev(a3, "onclick", "w3_close()");
+    			add_location(a3, file$6, 43, 6, 1135);
+    			if (img.src !== (img_src_value = "https://www.w3schools.com/images/w3schools.png")) attr_dev(img, "src", img_src_value);
+    			set_style(img, "width", "80%");
+    			attr_dev(img, "alt", "xxx");
+    			add_location(img, file$6, 50, 8, 1378);
+    			attr_dev(a4, "class", "w3-bar-item w3-button w3-border-bottom w3-large");
+    			attr_dev(a4, "href", "#");
+    			add_location(a4, file$6, 49, 6, 1301);
+    			attr_dev(a5, "class", "w3-bar-item w3-button");
+    			attr_dev(a5, "href", "#");
+    			add_location(a5, file$6, 55, 6, 1515);
+    			attr_dev(a6, "class", "w3-bar-item w3-button");
+    			attr_dev(a6, "href", "#");
+    			add_location(a6, file$6, 56, 6, 1578);
+    			attr_dev(a7, "class", "w3-bar-item w3-button");
+    			attr_dev(a7, "href", "#");
+    			add_location(a7, file$6, 57, 6, 1643);
+    			attr_dev(a8, "class", "w3-bar-item w3-button");
+    			attr_dev(a8, "href", "#");
+    			add_location(a8, file$6, 58, 6, 1712);
+    			attr_dev(a9, "class", "w3-bar-item w3-button");
+    			attr_dev(a9, "href", "#");
+    			add_location(a9, file$6, 59, 6, 1774);
+    			attr_dev(div1, "id", "nav01");
+    			attr_dev(div1, "class", "w3-bar-block");
+    			add_location(div1, file$6, 42, 4, 1091);
+    			attr_dev(h11, "class", "w3-text-theme");
+    			add_location(h11, file$6, 64, 8, 1921);
+    			attr_dev(div2, "class", "w3-container w3-border-bottom");
+    			add_location(div2, file$6, 63, 6, 1869);
+    			attr_dev(li0, "class", "w3-padding-16");
+    			add_location(li0, file$6, 67, 8, 2014);
+    			attr_dev(li1, "class", "w3-padding-16");
+    			add_location(li1, file$6, 68, 8, 2072);
+    			attr_dev(li2, "class", "w3-padding-16");
+    			add_location(li2, file$6, 69, 8, 2125);
+    			attr_dev(li3, "class", "w3-padding-16");
+    			add_location(li3, file$6, 70, 8, 2180);
+    			attr_dev(li4, "class", "w3-padding-16");
+    			add_location(li4, file$6, 71, 8, 2228);
+    			attr_dev(li5, "class", "w3-padding-16");
+    			add_location(li5, file$6, 72, 8, 2282);
+    			attr_dev(li6, "class", "w3-padding-16");
+    			add_location(li6, file$6, 73, 8, 2342);
+    			attr_dev(ul, "class", "w3-ul w3-large");
+    			add_location(ul, file$6, 66, 6, 1978);
+    			attr_dev(div3, "id", "nav03");
+    			add_location(div3, file$6, 62, 4, 1846);
+    			attr_dev(div4, "class", "w3-sidebar w3-collapse w3-white w3-animate-left w3-large");
+    			set_style(div4, "z-index", "3");
+    			set_style(div4, "width", "300px");
+    			attr_dev(div4, "id", "mySidebar");
+    			add_location(div4, file$6, 13, 2, 299);
+    			attr_dev(div5, "class", "w3-overlay w3-hide-large");
+    			attr_dev(div5, "onclick", "w3_close()");
+    			set_style(div5, "cursor", "pointer");
+    			attr_dev(div5, "id", "myOverlay");
+    			add_location(div5, file$6, 78, 2, 2432);
+    			attr_dev(i3, "class", "fa fa-bars w3-button w3-teal w3-xlarge");
+    			attr_dev(i3, "onclick", "w3_open()");
+    			add_location(i3, file$6, 87, 6, 2664);
+    			attr_dev(div6, "class", "w3-top w3-theme w3-large w3-hide-large");
+    			add_location(div6, file$6, 86, 4, 2605);
+    			attr_dev(h12, "class", "w3-xxxlarge w3-padding-16");
+    			add_location(h12, file$6, 91, 6, 2822);
+    			attr_dev(header, "class", "w3-container w3-theme w3-padding-64 w3-center");
+    			add_location(header, file$6, 90, 4, 2753);
+    			attr_dev(a10, "class", "w3-button w3-theme w3-hover-white");
+    			attr_dev(a10, "href", "/css/tryit.asp?filename=trycss_default");
+    			attr_dev(a10, "target", "_blank");
+    			add_location(a10, file$6, 95, 6, 2973);
+    			attr_dev(div7, "class", "w3-container w3-padding-large w3-section w3-light-grey");
+    			add_location(div7, file$6, 94, 4, 2898);
+    			attr_dev(a11, "class", "w3-button w3-theme w3-hover-white");
+    			attr_dev(a11, "href", "/js/tryit.asp?filename=tryjs_default");
+    			attr_dev(a11, "target", "_blank");
+    			add_location(a11, file$6, 105, 8, 3243);
+    			add_location(p, file$6, 104, 6, 3231);
+    			attr_dev(div8, "class", "w3-container w3-padding-large w3-section w3-light-grey");
+    			add_location(div8, file$6, 103, 4, 3156);
+    			attr_dev(div9, "class", "w3-main");
+    			set_style(div9, "margin-left", "300px");
+    			add_location(div9, file$6, 84, 2, 2551);
+    			add_location(script, file$6, 115, 2, 3452);
+    			attr_dev(div10, "class", "w3-container w3-sand");
+    			add_location(div10, file$6, 8, 0, 197);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			mount_component(navbar, div, null);
-    			append_dev(div, t0);
-    			append_dev(div, h1);
-    			append_dev(div, t2);
-    			mount_component(route, div, null);
-    			append_dev(div, t3);
-    			mount_component(footer, div, null);
+    			insert_dev(target, div10, anchor);
+    			mount_component(navbar, div10, null);
+    			append_dev(div10, t0);
+    			append_dev(div10, h10);
+    			append_dev(div10, t2);
+    			mount_component(route, div10, null);
+    			append_dev(div10, t3);
+    			append_dev(div10, div4);
+    			append_dev(div4, div0);
+    			append_dev(div0, a0);
+    			append_dev(a0, i0);
+    			append_dev(div0, t4);
+    			append_dev(div0, a1);
+    			append_dev(a1, i1);
+    			append_dev(div0, t5);
+    			append_dev(div0, a2);
+    			append_dev(a2, i2);
+    			append_dev(div4, t6);
+    			append_dev(div4, div1);
+    			append_dev(div1, a3);
+    			append_dev(div1, t8);
+    			append_dev(div1, a4);
+    			append_dev(a4, img);
+    			append_dev(div1, t9);
+    			append_dev(div1, a5);
+    			append_dev(div1, t11);
+    			append_dev(div1, a6);
+    			append_dev(div1, t13);
+    			append_dev(div1, a7);
+    			append_dev(div1, t15);
+    			append_dev(div1, a8);
+    			append_dev(div1, t17);
+    			append_dev(div1, a9);
+    			append_dev(div4, t19);
+    			append_dev(div4, div3);
+    			append_dev(div3, div2);
+    			append_dev(div2, h11);
+    			append_dev(div3, t21);
+    			append_dev(div3, ul);
+    			append_dev(ul, li0);
+    			append_dev(ul, t23);
+    			append_dev(ul, li1);
+    			append_dev(ul, t25);
+    			append_dev(ul, li2);
+    			append_dev(ul, t27);
+    			append_dev(ul, li3);
+    			append_dev(ul, t29);
+    			append_dev(ul, li4);
+    			append_dev(ul, t31);
+    			append_dev(ul, li5);
+    			append_dev(ul, t33);
+    			append_dev(ul, li6);
+    			append_dev(div10, t35);
+    			append_dev(div10, div5);
+    			append_dev(div10, t36);
+    			append_dev(div10, div9);
+    			append_dev(div9, div6);
+    			append_dev(div6, i3);
+    			append_dev(div9, t37);
+    			append_dev(div9, header);
+    			append_dev(header, h12);
+    			append_dev(div9, t39);
+    			append_dev(div9, div7);
+    			append_dev(div7, a10);
+    			append_dev(div9, t41);
+    			append_dev(div9, div8);
+    			append_dev(div8, p);
+    			append_dev(p, a11);
+    			append_dev(div10, t43);
+    			append_dev(div10, script);
+    			insert_dev(target, t45, anchor);
+    			mount_component(footer, target, anchor);
     			current = true;
     		},
     		p: function update(changed, ctx) {
@@ -2490,10 +2827,11 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(div10);
     			destroy_component(navbar);
     			destroy_component(route);
-    			destroy_component(footer);
+    			if (detaching) detach_dev(t45);
+    			destroy_component(footer, detaching);
     		}
     	};
 
@@ -2560,17 +2898,278 @@ var app = (function () {
     	}
     }
 
-    /* src/layouts/public_layout.svelte generated by Svelte v3.15.0 */
-    const file$7 = "src/layouts/public_layout.svelte";
+    /* src/components/sidebar.svelte generated by Svelte v3.15.0 */
+
+    const file$7 = "src/components/sidebar.svelte";
 
     function create_fragment$9(ctx) {
+    	let div4;
+    	let div0;
+    	let a0;
+    	let i0;
+    	let t0;
+    	let a1;
+    	let i1;
+    	let t1;
+    	let div1;
+    	let a2;
+    	let t3;
+    	let a3;
+    	let img;
+    	let img_src_value;
+    	let t4;
+    	let a4;
+    	let t6;
+    	let a5;
+    	let t8;
+    	let a6;
+    	let t10;
+    	let a7;
+    	let t12;
+    	let a8;
+    	let t14;
+    	let div3;
+    	let div2;
+    	let h1;
+    	let t16;
+    	let ul;
+    	let li0;
+    	let t18;
+    	let li1;
+    	let t20;
+    	let li2;
+    	let t22;
+    	let li3;
+    	let t24;
+    	let li4;
+    	let t26;
+    	let li5;
+    	let t28;
+    	let li6;
+
+    	const block = {
+    		c: function create() {
+    			div4 = element("div");
+    			div0 = element("div");
+    			a0 = element("a");
+    			i0 = element("i");
+    			t0 = space();
+    			a1 = element("a");
+    			i1 = element("i");
+    			t1 = space();
+    			div1 = element("div");
+    			a2 = element("a");
+    			a2.textContent = "�";
+    			t3 = space();
+    			a3 = element("a");
+    			img = element("img");
+    			t4 = space();
+    			a4 = element("a");
+    			a4.textContent = "Learn HTML";
+    			t6 = space();
+    			a5 = element("a");
+    			a5.textContent = "Learn W3.CSS";
+    			t8 = space();
+    			a6 = element("a");
+    			a6.textContent = "Learn JavaScript";
+    			t10 = space();
+    			a7 = element("a");
+    			a7.textContent = "Learn SQL";
+    			t12 = space();
+    			a8 = element("a");
+    			a8.textContent = "Learn PHP";
+    			t14 = space();
+    			div3 = element("div");
+    			div2 = element("div");
+    			h1 = element("h1");
+    			h1.textContent = "W3.CSS";
+    			t16 = space();
+    			ul = element("ul");
+    			li0 = element("li");
+    			li0.textContent = "Smaller and faster";
+    			t18 = space();
+    			li1 = element("li");
+    			li1.textContent = "Easier to use";
+    			t20 = space();
+    			li2 = element("li");
+    			li2.textContent = "Easier to learn";
+    			t22 = space();
+    			li3 = element("li");
+    			li3.textContent = "CSS only";
+    			t24 = space();
+    			li4 = element("li");
+    			li4.textContent = "Speeds up apps";
+    			t26 = space();
+    			li5 = element("li");
+    			li5.textContent = "CSS equality for all";
+    			t28 = space();
+    			li6 = element("li");
+    			li6.textContent = "PC Laptop Tablet Mobile";
+    			attr_dev(i0, "class", "fa fa-bars w3-xlarge");
+    			add_location(i0, file$7, 11, 6, 308);
+    			attr_dev(a0, "class", "w3-bar-item w3-button");
+    			set_style(a0, "width", "33.33%");
+    			attr_dev(a0, "href", "javascript:void(0)");
+    			attr_dev(a0, "onclick", "openNav('nav01')");
+    			add_location(a0, file$7, 6, 4, 170);
+    			attr_dev(i1, "class", "fa fa-file w3-xlarge");
+    			add_location(i1, file$7, 18, 6, 494);
+    			attr_dev(a1, "class", "w3-bar-item w3-button");
+    			set_style(a1, "width", "33.33%");
+    			attr_dev(a1, "href", "javascript:void(0)");
+    			attr_dev(a1, "onclick", "openNav('nav02')");
+    			add_location(a1, file$7, 13, 4, 356);
+    			attr_dev(div0, "class", "w3-bar w3-black w3-center");
+    			add_location(div0, file$7, 5, 2, 126);
+    			attr_dev(a2, "class", "w3-button w3-hover-teal w3-hide-large w3-large w3-right");
+    			attr_dev(a2, "href", "javascript:void(0)");
+    			attr_dev(a2, "onclick", "w3_close()");
+    			add_location(a2, file$7, 23, 4, 592);
+    			if (img.src !== (img_src_value = "https://www.w3schools.com/images/w3schools.png")) attr_dev(img, "src", img_src_value);
+    			set_style(img, "width", "80%");
+    			add_location(img, file$7, 30, 6, 821);
+    			attr_dev(a3, "class", "w3-bar-item w3-button w3-border-bottom w3-large");
+    			attr_dev(a3, "href", "#");
+    			add_location(a3, file$7, 29, 4, 746);
+    			attr_dev(a4, "class", "w3-bar-item w3-button");
+    			attr_dev(a4, "href", "#");
+    			add_location(a4, file$7, 34, 4, 930);
+    			attr_dev(a5, "class", "w3-bar-item w3-button");
+    			attr_dev(a5, "href", "#");
+    			add_location(a5, file$7, 35, 4, 991);
+    			attr_dev(a6, "class", "w3-bar-item w3-button");
+    			attr_dev(a6, "href", "#");
+    			add_location(a6, file$7, 36, 4, 1054);
+    			attr_dev(a7, "class", "w3-bar-item w3-button");
+    			attr_dev(a7, "href", "#");
+    			add_location(a7, file$7, 37, 4, 1121);
+    			attr_dev(a8, "class", "w3-bar-item w3-button");
+    			attr_dev(a8, "href", "#");
+    			add_location(a8, file$7, 38, 4, 1181);
+    			attr_dev(div1, "id", "nav01");
+    			attr_dev(div1, "class", "w3-bar-block");
+    			add_location(div1, file$7, 22, 2, 550);
+    			attr_dev(h1, "class", "w3-text-theme");
+    			add_location(h1, file$7, 43, 6, 1320);
+    			attr_dev(div2, "class", "w3-container w3-border-bottom");
+    			add_location(div2, file$7, 42, 4, 1270);
+    			attr_dev(li0, "class", "w3-padding-16");
+    			add_location(li0, file$7, 46, 6, 1407);
+    			attr_dev(li1, "class", "w3-padding-16");
+    			add_location(li1, file$7, 47, 6, 1463);
+    			attr_dev(li2, "class", "w3-padding-16");
+    			add_location(li2, file$7, 48, 6, 1514);
+    			attr_dev(li3, "class", "w3-padding-16");
+    			add_location(li3, file$7, 49, 6, 1567);
+    			attr_dev(li4, "class", "w3-padding-16");
+    			add_location(li4, file$7, 50, 6, 1613);
+    			attr_dev(li5, "class", "w3-padding-16");
+    			add_location(li5, file$7, 51, 6, 1665);
+    			attr_dev(li6, "class", "w3-padding-16");
+    			add_location(li6, file$7, 52, 6, 1723);
+    			attr_dev(ul, "class", "w3-ul w3-large");
+    			add_location(ul, file$7, 45, 4, 1373);
+    			attr_dev(div3, "id", "nav02");
+    			add_location(div3, file$7, 41, 2, 1249);
+    			attr_dev(div4, "class", "w3-sidebar w3-collapse w3-white w3-animate-left w3-large");
+    			set_style(div4, "z-index", "3");
+    			set_style(div4, "width", "250px");
+    			attr_dev(div4, "id", "mySidebar");
+    			add_location(div4, file$7, 0, 0, 0);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div4, anchor);
+    			append_dev(div4, div0);
+    			append_dev(div0, a0);
+    			append_dev(a0, i0);
+    			append_dev(div0, t0);
+    			append_dev(div0, a1);
+    			append_dev(a1, i1);
+    			append_dev(div4, t1);
+    			append_dev(div4, div1);
+    			append_dev(div1, a2);
+    			append_dev(div1, t3);
+    			append_dev(div1, a3);
+    			append_dev(a3, img);
+    			append_dev(div1, t4);
+    			append_dev(div1, a4);
+    			append_dev(div1, t6);
+    			append_dev(div1, a5);
+    			append_dev(div1, t8);
+    			append_dev(div1, a6);
+    			append_dev(div1, t10);
+    			append_dev(div1, a7);
+    			append_dev(div1, t12);
+    			append_dev(div1, a8);
+    			append_dev(div4, t14);
+    			append_dev(div4, div3);
+    			append_dev(div3, div2);
+    			append_dev(div2, h1);
+    			append_dev(div3, t16);
+    			append_dev(div3, ul);
+    			append_dev(ul, li0);
+    			append_dev(ul, t18);
+    			append_dev(ul, li1);
+    			append_dev(ul, t20);
+    			append_dev(ul, li2);
+    			append_dev(ul, t22);
+    			append_dev(ul, li3);
+    			append_dev(ul, t24);
+    			append_dev(ul, li4);
+    			append_dev(ul, t26);
+    			append_dev(ul, li5);
+    			append_dev(ul, t28);
+    			append_dev(ul, li6);
+    		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div4);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$9.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    class Sidebar extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, null, create_fragment$9, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Sidebar",
+    			options,
+    			id: create_fragment$9.name
+    		});
+    	}
+    }
+
+    /* src/layouts/public_layout.svelte generated by Svelte v3.15.0 */
+    const file$8 = "src/layouts/public_layout.svelte";
+
+    function create_fragment$a(ctx) {
     	let div;
     	let t0;
+    	let t1;
     	let h1;
-    	let t2;
     	let t3;
+    	let t4;
     	let current;
     	const navbar = new Navbar({ $$inline: true });
+    	const sidebar = new Sidebar({ $$inline: true });
 
     	const route = new src_4({
     			props: { currentRoute: ctx.currentRoute },
@@ -2584,15 +3183,17 @@ var app = (function () {
     			div = element("div");
     			create_component(navbar.$$.fragment);
     			t0 = space();
+    			create_component(sidebar.$$.fragment);
+    			t1 = space();
     			h1 = element("h1");
     			h1.textContent = "Public Layout";
-    			t2 = space();
-    			create_component(route.$$.fragment);
     			t3 = space();
+    			create_component(route.$$.fragment);
+    			t4 = space();
     			create_component(footer.$$.fragment);
-    			add_location(h1, file$7, 10, 2, 247);
+    			add_location(h1, file$8, 12, 2, 315);
     			attr_dev(div, "class", "w3-container w3-sand");
-    			add_location(div, file$7, 8, 0, 197);
+    			add_location(div, file$8, 9, 0, 251);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2601,10 +3202,12 @@ var app = (function () {
     			insert_dev(target, div, anchor);
     			mount_component(navbar, div, null);
     			append_dev(div, t0);
+    			mount_component(sidebar, div, null);
+    			append_dev(div, t1);
     			append_dev(div, h1);
-    			append_dev(div, t2);
-    			mount_component(route, div, null);
     			append_dev(div, t3);
+    			mount_component(route, div, null);
+    			append_dev(div, t4);
     			mount_component(footer, div, null);
     			current = true;
     		},
@@ -2616,12 +3219,14 @@ var app = (function () {
     		i: function intro(local) {
     			if (current) return;
     			transition_in(navbar.$$.fragment, local);
+    			transition_in(sidebar.$$.fragment, local);
     			transition_in(route.$$.fragment, local);
     			transition_in(footer.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(navbar.$$.fragment, local);
+    			transition_out(sidebar.$$.fragment, local);
     			transition_out(route.$$.fragment, local);
     			transition_out(footer.$$.fragment, local);
     			current = false;
@@ -2629,6 +3234,7 @@ var app = (function () {
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
     			destroy_component(navbar);
+    			destroy_component(sidebar);
     			destroy_component(route);
     			destroy_component(footer);
     		}
@@ -2636,7 +3242,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$9.name,
+    		id: create_fragment$a.name,
     		type: "component",
     		source: "",
     		ctx
@@ -2671,13 +3277,13 @@ var app = (function () {
     class Public_layout extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$6, create_fragment$9, safe_not_equal, { currentRoute: 0 });
+    		init(this, options, instance$6, create_fragment$a, safe_not_equal, { currentRoute: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "Public_layout",
     			options,
-    			id: create_fragment$9.name
+    			id: create_fragment$a.name
     		});
 
     		const { ctx } = this.$$;
@@ -2729,7 +3335,7 @@ var app = (function () {
 
     /* src/App.svelte generated by Svelte v3.15.0 */
 
-    function create_fragment$a(ctx) {
+    function create_fragment$b(ctx) {
     	let t;
     	let current;
     	const router = new src_5({ props: { routes }, $$inline: true });
@@ -2765,7 +3371,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$a.name,
+    		id: create_fragment$b.name,
     		type: "component",
     		source: "",
     		ctx
@@ -2777,13 +3383,13 @@ var app = (function () {
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, null, create_fragment$a, safe_not_equal, {});
+    		init(this, options, null, create_fragment$b, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "App",
     			options,
-    			id: create_fragment$a.name
+    			id: create_fragment$b.name
     		});
     	}
     }

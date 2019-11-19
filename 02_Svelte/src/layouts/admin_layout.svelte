@@ -10,5 +10,4 @@
   <NavBar />
   <h1>Admin Layout</h1>
   <Route {currentRoute} />
-  <Footer />
-</div>
+<Footer />

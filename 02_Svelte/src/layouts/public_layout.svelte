@@ -1,6 +1,7 @@
 <script>
   import { Route } from "svelte-router-spa";
   import NavBar from "../components/navbar.svelte";
+  import SideBar from "../components/sidebar.svelte";
   import Footer from "../components/footer.svelte";
 
   export let currentRoute;
@@ -8,6 +9,7 @@
 
 <div class="w3-container w3-sand">
   <NavBar />
+  <SideBar />
   <h1>Public Layout</h1>
   <Route {currentRoute} />
   <Footer />
