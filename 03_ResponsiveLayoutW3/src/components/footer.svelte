@@ -1,9 +1,8 @@
-<footer
-  class="w3-container w3-padding-large w3-light-grey w3-justify w3-opacity">
+<footer class=" w3-padding-large w3-theme-l4 w3-justify ">
   <p />
   <nav>
-    <a href="#" target="_blank">Link 1</a>
+    <a href="#" target="_blank" class="w3-text-theme">Link 1</a>
     |
-    <a href="#" target="_top">Link 2</a>
+    <a href="#" target="_top" class="w3-text-theme">Link 2</a>
   </nav>
 </footer>

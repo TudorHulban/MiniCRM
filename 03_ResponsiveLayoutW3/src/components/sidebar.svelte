@@ -20,7 +20,7 @@
   style="z-index:3;width:250px;"
   id="mySidebar">
 
-  <div class="w3-bar w3-black w3-center">
+  <div class="w3-bar w3-theme-dark w3-center">
     <a
       class="w3-bar-item w3-button"
       style="width:50%"
@@ -39,7 +39,7 @@
 
   <div id="nav01" class="w3-bar-block">
     <a
-      class="w3-button w3-hover-teal w3-hide-large w3-large w3-right"
+      class="w3-button w3-hover-theme w3-hide-large w3-large w3-right"
       href="javascript:void(0)"
       on:click={w3_close}>
       x
@@ -50,7 +50,7 @@
 
   <div id="nav02" class="w3-bar-block">
     <a
-      class="w3-button w3-hover-teal w3-hide-large w3-large w3-right"
+      class="w3-button w3-hover-theme w3-hide-large w3-large w3-right"
       href="javascript:void(0)"
       on:click={w3_close}>
       x
