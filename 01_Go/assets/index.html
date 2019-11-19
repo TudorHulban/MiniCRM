@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <input type="text" name="logincode" placeholder="Login CODE" />
+        <input type="password" name="loginpwd" placeholder="Password" />
+        <input type="submit" value="Login">
+    </form>
+
+    <h1>New User</h1>
+    <form action="/create" method="POST">
+        <input type="text" name="name" placeholder="User Name" />
+        <input type="text" name="logincode" placeholder="Login CODE" />
+        Company Email: <input type="text" name="email" placeholder="user@gmail.com" />
+        <input type="password" name="loginpwd" placeholder="Login Password" />
+        <input type="submit" value="Create">
+    </form>
+
+    <h1>Upload File</h1>
+    <form action="/uploadfile" method="post" enctype="multipart/form-data">
+        Event ID: <input type="text" name="eventid" placeholder="Event ID"> 
+        CODE: <input type="text" name="code"> 
+        File: <input type="file" name="file">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>Create Ticket</h1>
+    <form action="/uploadfile" method="post" enctype="multipart/form-data">
+        Title: <input type="text" name="title" placeholder="Ticket title"> 
+        Description: <input type="text" name="title" placeholder="Ticket description"> 
+        User CODE: <input type="text" name="code"> 
+        File: <input type="file" name="file">
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="tile is-vertical is-8">
+        <h1>Create Event</h1>
+        <form action="/newevent" method="post" enctype="multipart/form-data">
+            User code: <input type="text" name="code" placeholder="Login CODE"> 
+            For event ID: <input type="text" name="evid" placeholder="For event ID">
+            Title: <input type="text" name="title" placeholder="Event title"> 
+            Content: <input type="text" name="content" placeholder="Event content"> 
+            File: <input type="file" name="file">
+            <input type="submit" value="Create">
+        </form>
+    </div>
+ 
+</body>
+
+</html>
