@@ -1,7 +1,6 @@
 import { user } from '../state/user.js';
-import Login from '../views/login.svelte';
-import Admin from '../views/authorized.svelte';
-import AdminLayout from '../layouts/admin_layout.svelte';
+import Login from '../components/login.svelte';
+import ResponsiveLayout from '../layouts/responsivew3.svelte';
 
 let auth;
 user.subscribe(u => {
@@ -19,8 +18,7 @@ const routes = [
   },
   {
     name: '/',
-    component: Admin,
-    layout: AdminLayout,
+    layout: ResponsiveLayout,
     onlyIf: {
       guard: userIsAdmin,
       redirect: '/login'

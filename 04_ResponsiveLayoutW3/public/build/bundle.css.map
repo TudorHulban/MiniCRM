@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../../src/components/login.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n  import { user } from \"../state/user.js\";\n  import { navigateTo } from \"svelte-router-spa\";\n  import { urls } from \"../routes/urls.js\";\n\n  let usercode = \"admin\";\n  let password = \"xxx\";\n\n  async function fetchToken(pURL, pBody) {\n    const resp = await fetch(pURL, {\n      method: \"POST\",\n      body: pBody\n    });\n    return await resp.json();\n  }\n\n  function handleSubmit() {\n    const bodyFormData = new FormData();\n    bodyFormData.set(\"logincode\", usercode);\n    bodyFormData.set(\"password\", password);\n\n    fetchToken(urls.Login, bodyFormData).then(function(r) {\n      if (r.token == undefined) {\n        user.updateIsLogged(false);\n        return;\n      }\n      user.updateLoggedUserState(true, r.token, r.id);\n      navigateTo(\"admin\");\n    });\n  }\n</script>\n\n<style>\n  .alata {\n    font-family: \"Alata\", sans-serif;\n  }\n</style>\n\n<div class=\"w3-container w3-half w3-margin-top\" style=\"height:200px;\">\n  <div class=\"w3-container w3-display-middle w3-card-4 alata\">\n    <h5 class=\"w3-center alata\">Login Page</h5>\n\n    <form on:submit|preventDefault={handleSubmit} class=\"w3-container \">\n      <label>User CODE</label>\n      <input\n        type=\"text\"\n        name=\"logincode\"\n        bind:value={usercode}\n        style=\"width:90%\"\n        class=\"w3-input w3-margin-bottom\" />\n\n      <label>Password</label>\n      <input\n        type=\"password\"\n        name=\"password\"\n        bind:value={password}\n        style=\"width:90%\"\n        class=\"w3-input\" />\n\n      <p>\n        <button type=\"submit\" class=\"w3-button w3-blue alata\">Login</button>\n      </p>\n    </form>\n  </div>\n</div>\n"
+  ],
+  "names": [],
+  "mappings": "AAiCE,MAAM,eAAC,CAAC,AACN,WAAW,CAAE,OAAO,CAAC,CAAC,UAAU,AAClC,CAAC"
+}
