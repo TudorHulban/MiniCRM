@@ -13,10 +13,12 @@ type Blog struct {
 	Resources []Resource
 }
 
+// Given model as parameter, CreateTable4Model creates RDBMS table using the ORM.
 func (b *Blog) CreateTable4Model(pModel interface{}) error {
 	return b.DBConn.CreateTable(pModel, &orm.CreateTableOptions{Temp: false, IfNotExists: true, FKConstraints: true})
 }
 
+// NewBlog creates RDBMS tables for applications models.
 func NewBlog(pDB *pg.DB) (*Blog, error) {
 	result := new(Blog)
 	result.DBConn = pDB

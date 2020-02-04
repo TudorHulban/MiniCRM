@@ -1,4 +1,4 @@
-package main
+package models
 
 // Resource is used in events. Can be consumed by event (ex. linear - cable, piece - nut) or not (ex. vehicle).
 type Resource struct {

@@ -1,4 +1,4 @@
-package main
+package structs
 
 type Contact struct {
 	ID             int64

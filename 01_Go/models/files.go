@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"bufio"
@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// File is a type used for uploading files for events.
 type File struct {
 	ID               int64
 	BelongsToEventID int64

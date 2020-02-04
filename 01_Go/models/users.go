@@ -1,4 +1,4 @@
-package main
+package models
 
 /*
 Uses docker image created:
@@ -11,21 +11,22 @@ const saltLength = 8
 
 var userRights map[int]string
 
+// User is the representation of the user.
 type User struct {
-	ID            int64      `json:"ID"`
-	PasswordSALT  string     `json:"-" pg:",notnull` // should not be sent in JSON
-	PasswordHASH  string     `json:"-" pg:",notnull` // should not be sent in JSON
+	ID            int64      `json:"ID"`             // primary key
+	PasswordSALT  string     `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
+	PasswordHASH  string     `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
 	LoginCODE     string     `json:"code" pg:",notnull,unique"`
 	loginPWD      string     `pg:",notnull"`
 	SecurityGroup int        `pg:",notnull"` // as per userRights, userRights = map[int]string{1: "admin", 2: "user", 3: "external user"}
-	TeamID        int        // 2, 3 security groups can only see teams tickets
+	TeamID        int        // security groups 2, 3 can only see teams tickets
 	TicketsNo     int        // number of assigned tickets
 	ContactIDs    []int64    // user should accomodate several cntacts
 	ContactInfo   []*Contact `pg:"-"`
 }
 
 // CRUD - Create
-
+// NewUser
 func (b *Blog) NewUser(pUser *User) error {
 	pUser.PasswordSALT = generateSalt(saltLength)
 	hash, errHash := hashPassword(pUser.loginPWD, pUser.PasswordSALT)
