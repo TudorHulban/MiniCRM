@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"github.com/go-pg/pg"
@@ -80,4 +80,18 @@ func NewBlog(pDB *pg.DB) (*Blog, error) {
 		return nil, errEvents
 	}
 	return result, nil
+}
+
+// CRUD - Create
+
+func (b *Blog) AddSLAPriority(pPriority *SLAPriority) error {
+	return b.DBConn.Insert(pPriority)
+}
+
+func (b *Blog) AddSLA(pSLA *SLA) error {
+	return b.DBConn.Insert(pSLA)
+}
+
+func (b *Blog) AddSLAValues(pSLAValues *SLAValues) error {
+	return b.DBConn.Insert(pSLAValues)
 }

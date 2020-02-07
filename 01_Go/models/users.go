@@ -1,5 +1,13 @@
 package models
 
+import (
+	"math/rand"
+	"strings"
+	"time"
+
+	"golang.org/x/crypto/bcrypt"
+)
+
 /*
 Uses docker image created:
 docker run --name P1 -d -p 5432:5432 -e POSTGRES_PASSWORD=pp postgres:alpine
@@ -11,29 +19,52 @@ const saltLength = 8
 
 var userRights map[int]string
 
-// User is the representation of the user.
+// User is the representation of the user of the app in the persistance layer.
+// Several methods are defined on this structure in order to provide the functionality needed.
+// Sorted for maligned.
 type User struct {
-	ID            int64      `json:"ID"`             // primary key
-	PasswordSALT  string     `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
-	PasswordHASH  string     `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
-	LoginCODE     string     `json:"code" pg:",notnull,unique"`
-	loginPWD      string     `pg:",notnull"`
-	SecurityGroup int        `pg:",notnull"` // as per userRights, userRights = map[int]string{1: "admin", 2: "user", 3: "external user"}
-	TeamID        int        // security groups 2, 3 can only see teams tickets
-	TicketsNo     int        // number of assigned tickets
-	ContactIDs    []int64    // user should accomodate several cntacts
-	ContactInfo   []*Contact `pg:"-"`
+	TeamID        int    // security groups 2, 3 can only see teams tickets
+	SecurityGroup int    `pg:",notnull"` // as per userRights, userRights = map[int]string{1: "admin", 2: "user", 3: "external user"}
+	TicketsNo     int    // number of assigned tickets
+	ID            int64  `json:"ID"`             // primary key, provided after insert thus pointer needed.
+	PasswordSALT  string `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
+	PasswordHASH  string `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
+	LoginCODE     string `json:"code" pg:",notnull,unique"`
+	loginPWD      string `pg:",notnull"`
+
+	ContactIDs  []int64    // user should accomodate several contacts
+	ContactInfo []*Contact `pg:"-"`
 }
 
-// CRUD - Create
-// NewUser
-func (b *Blog) NewUser(pUser *User) error {
+type RDBMSUser interface {
+}
+
+func generateSalt(pLength int) string {
+	rand.Seed(time.Now().UnixNano())
+	result := make([]string, pLength)
+
+	randInt := func(pMin, pMax int) int {
+		return pMin + rand.Intn(pMax-pMin)
+	}
+	for k := range result {
+		result[k] = string(byte(randInt(65, 90)))
+	}
+	return strings.Join(result, "")
+}
+
+func hashPassword(pPassword, pSalt string) (string, error) {
+	bytes, errHash := bcrypt.GenerateFromPassword([]byte(pPassword+pSalt), 14)
+	return string(bytes), errHash
+}
+
+// PersistUser saves the user variable in the persistance layer. Pointer needed as ID would be read from RDBMS insert.
+func PersistUser(pUser *User) error {
 	pUser.PasswordSALT = generateSalt(saltLength)
 	hash, errHash := hashPassword(pUser.loginPWD, pUser.PasswordSALT)
 	if errHash != nil {
 		return errHash
 	}
-	pUser.PasswordHASH = string(hash)
+	pUser.PasswordHASH = hash
 
 	for _, v := range pUser.ContactInfo {
 		errInsertContact := b.DBConn.Insert(v)
