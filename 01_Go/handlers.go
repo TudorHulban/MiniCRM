@@ -1,8 +1,5 @@
-/*
-File concentrates handlers for exposed endpoints.
-HTTP status codes as per:
-https://www.restapitutorial.com/httpstatuscodes.html
-*/
+// File concentrates handlers for exposed endpoints.
+// HTTP status codes as per: https://www.restapitutorial.com/httpstatuscodes.html
 package main
 
 import (
@@ -11,17 +8,20 @@ import (
 	"net/http"
 	"strconv"
 
+	"./interfaces"
+	"./models"
+
 	"github.com/labstack/echo"
 )
 
+// httpError defined for pushing error into JSON.
 type httpError struct {
-	TheError string `json:"error"`
+	TheError string `json:"error"` // exported for JSON pick up
 }
 
 // hLoginWithUserPassword is handler to perform user and password authentication against persisted data.
-func hLoginWithUserPassword(c echo.Context) error {
-	var e httpError
-	e.TheError = "credentials not found"
+func loginWithUserPassword(c echo.Context) error {
+	e := httpError{TheError: "credentials not found"}
 
 	errValidateForm := validateForm(c)
 	if errValidateForm != nil {

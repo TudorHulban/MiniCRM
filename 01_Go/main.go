@@ -7,7 +7,7 @@ import (
 )
 
 const port = "1323"
-const uploadFolder = "uploads/"
+const uploadFolder = "public/uploads/"
 
 var blog *Blog
 var db *pg.DB

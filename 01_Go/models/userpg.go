@@ -5,6 +5,10 @@ import (
 	"strings"
 	"time"
 
+	s "../structs"
+
+	"github.com/go-pg/pg"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -19,43 +23,11 @@ const saltLength = 8
 
 var userRights map[int]string
 
-// UserPg is the representation of the user of the app in the Postgres persistance layer.
-// Several methods are defined on this structure in order to satisfy RDBMSUser interface.
-// Sorted for maligned.
-type UserPg struct {
-	TeamID        int    // security groups 2, 3 can only see teams tickets
-	SecurityGroup int    `pg:",notnull"` // as per userRights, userRights = map[int]string{1: "admin", 2: "user", 3: "external user"}
-	TicketsNo     int    // number of assigned tickets
-	ID            int64  `json:"ID"`             // primary key, provided after insert thus pointer needed.
-	PasswordSALT  string `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
-	PasswordHASH  string `json:"-" pg:",notnull` // should not be sent in JSON, exported for ORM
-	LoginCODE     string `json:"code" pg:",notnull,unique"`
-	loginPWD      string `pg:",notnull"`
-
-	ContactIDs  []int64    // user should accomodate several contacts
-	ContactInfo []*Contact `pg:"-"`
-}
-
-func generateSalt(pLength int) string {
-	rand.Seed(time.Now().UnixNano())
-	result := make([]string, pLength)
-
-	randInt := func(pMin, pMax int) int {
-		return pMin + rand.Intn(pMax-pMin)
-	}
-	for k := range result {
-		result[k] = string(byte(randInt(65, 90)))
-	}
-	return strings.Join(result, "")
-}
-
-func hashPassword(pPassword, pSalt string) (string, error) {
-	bytes, errHash := bcrypt.GenerateFromPassword([]byte(pPassword+pSalt), 14)
-	return string(bytes), errHash
-}
+// Userpg type would satisfy RDBMSUser interface.
+type Userpg s.User
 
 // Add saves the user variable in the Pg layer. Pointer needed as ID would be read from RDBMS insert.
-func Add(pUser *User) error {
+func (u *Userpg) Add(pUser *Userpg) error {
 	pUser.PasswordSALT = generateSalt(saltLength)
 	hash, errHash := hashPassword(pUser.loginPWD, pUser.PasswordSALT)
 	if errHash != nil {
@@ -86,7 +58,7 @@ func Add(pUser *User) error {
 }
 
 // GetUserByPK fetches user info from Pg and returns a user type.
-func GetUserByPK(pID int64) (User, error) {
+func (u *Userpg) GetUserByPK(pID int64) (Userpg, error) {
 	result := User{ID: pID}
 	// verify if requester
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
@@ -111,7 +83,7 @@ func GetUserByPK(pID int64) (User, error) {
 }
 
 // GetUserByCode retrieves user given code.
-func (b *Blog) GetUserByCode(pRequesterUserID int64, pCODE string) (User, error) {
+func (u *Userpg) GetUserByCode(pRequesterUserID int64, pCODE string) (Userpg, error) {
 	result := User{LoginCODE: pCODE}
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -135,7 +107,7 @@ func (b *Blog) GetUserByCode(pRequesterUserID int64, pCODE string) (User, error)
 }
 
 // GetUserByCodeUnauthorized retrieves user given code.
-func (b *Blog) GetUserByCodeUnauthorized(pCODE string) (User, error) {
+func (u *Userpg) GetUserByCodeUnauthorized(pCODE string) (Userpg, error) {
 	result := User{LoginCODE: pCODE}
 	errSelect := b.DBConn.Model(&result).Where("login_code = ?", pCODE).Select()
 
@@ -146,7 +118,7 @@ func (b *Blog) GetUserByCodeUnauthorized(pCODE string) (User, error) {
 }
 
 // GetAllUsers retrieves user as per requester security rights.
-func (b *Blog) GetAllUsers(pRequesterUserID int64, pHowMany int) ([]User, error) {
+func (u *Userpg) GetAllUsers(pRequesterUserID int64, pHowMany int) ([]Userpg, error) {
 	var result []User
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -166,7 +138,7 @@ func (b *Blog) GetAllUsers(pRequesterUserID int64, pHowMany int) ([]User, error)
 	return result, errSelect
 }
 
-func (b *Blog) GetMaxIDUsers() (int64, error) {
+func (u *Userpg) GetMaxIDUsers() (int64, error) {
 	var maxID struct {
 		Max int64
 	}
@@ -176,7 +148,7 @@ func (b *Blog) GetMaxIDUsers() (int64, error) {
 
 // CRUD - Update
 
-func (b *Blog) UpdateUser(pUser *User) error {
+func (u *Userpg) UpdateUser(pUser *Userpg) error {
 	return b.DBConn.Update(pUser)
 }
 
@@ -188,7 +160,7 @@ func getUserSecurityGroup(pDB *pg.DB, pID int64) (int64, error) {
 	return result.SecurityGroup
 }
 
-func getContactInfo(b *Blog, pUser *User) error {
+func getContactInfo(b *Blog, pUser *Userpg) error {
 	for _, v := range pUser.ContactIDs {
 		co := new(Contact)
 		co.ID = v
@@ -199,4 +171,22 @@ func getContactInfo(b *Blog, pUser *User) error {
 		pUser.ContactInfo = append(pUser.ContactInfo, co)
 	}
 	return nil
+}
+
+func generateSalt(pLength int) string {
+	rand.Seed(time.Now().UnixNano())
+	result := make([]string, pLength)
+
+	randInt := func(pMin, pMax int) int {
+		return pMin + rand.Intn(pMax-pMin)
+	}
+	for k := range result {
+		result[k] = string(byte(randInt(65, 90)))
+	}
+	return strings.Join(result, "")
+}
+
+func hashPassword(pPassword, pSalt string) (string, error) {
+	bytes, errHash := bcrypt.GenerateFromPassword([]byte(pPassword+pSalt), 14)
+	return string(bytes), errHash
 }
