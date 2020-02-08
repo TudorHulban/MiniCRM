@@ -19,10 +19,10 @@ const saltLength = 8
 
 var userRights map[int]string
 
-// User is the representation of the user of the app in the persistance layer.
-// Several methods are defined on this structure in order to provide the functionality needed.
+// UserPg is the representation of the user of the app in the Postgres persistance layer.
+// Several methods are defined on this structure in order to satisfy RDBMSUser interface.
 // Sorted for maligned.
-type User struct {
+type UserPg struct {
 	TeamID        int    // security groups 2, 3 can only see teams tickets
 	SecurityGroup int    `pg:",notnull"` // as per userRights, userRights = map[int]string{1: "admin", 2: "user", 3: "external user"}
 	TicketsNo     int    // number of assigned tickets
@@ -34,9 +34,6 @@ type User struct {
 
 	ContactIDs  []int64    // user should accomodate several contacts
 	ContactInfo []*Contact `pg:"-"`
-}
-
-type RDBMSUser interface {
 }
 
 func generateSalt(pLength int) string {
@@ -57,8 +54,8 @@ func hashPassword(pPassword, pSalt string) (string, error) {
 	return string(bytes), errHash
 }
 
-// PersistUser saves the user variable in the persistance layer. Pointer needed as ID would be read from RDBMS insert.
-func PersistUser(pUser *User) error {
+// Add saves the user variable in the Pg layer. Pointer needed as ID would be read from RDBMS insert.
+func Add(pUser *User) error {
 	pUser.PasswordSALT = generateSalt(saltLength)
 	hash, errHash := hashPassword(pUser.loginPWD, pUser.PasswordSALT)
 	if errHash != nil {
@@ -88,10 +85,10 @@ func PersistUser(pUser *User) error {
 	return nil
 }
 
-// CRUD - Read
-
-func (b *Blog) GetUserByPK(pID int64) (User, error) {
+// GetUserByPK fetches user info from Pg and returns a user type.
+func GetUserByPK(pID int64) (User, error) {
 	result := User{ID: pID}
+	// verify if requester
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
 		return result, errSelectRequester
@@ -183,14 +180,12 @@ func (b *Blog) UpdateUser(pUser *User) error {
 	return b.DBConn.Update(pUser)
 }
 
-// CRUD - Delete
-
-// Helpers
-
-func getRequesterSecurityGroup(b *Blog, pRequesterUserID int64) (*User, error) {
-	result := new(User)
-	result.ID = pRequesterUserID
-	return result, b.DBConn.Select(result)
+// getUserSecurityGroup receives the Pg ID of the user requesting the info and returns only the security group ID of the user.
+func getUserSecurityGroup(pDB *pg.DB, pID int64) (int64, error) {
+	result := new(UserPg)
+	result.ID = pID
+	errSelect := pDB.DBConn.Select(result)
+	return result.SecurityGroup
 }
 
 func getContactInfo(b *Blog, pUser *User) error {

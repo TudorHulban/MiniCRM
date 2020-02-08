@@ -1,6 +1,7 @@
 package models
 
 import (
+	"../interfaces"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 )
@@ -8,7 +9,7 @@ import (
 // Blog concentrates resources that are permanently needed in memory.
 type Blog struct {
 	DBConn    *pg.DB
-	Users     []User
+	Users     []RDBMSUser
 	Teams     []Team
 	Resources []Resource
 }
