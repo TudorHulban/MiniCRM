@@ -4,23 +4,6 @@ import (
 	"time"
 )
 
-type Event struct {
-	ID                   int64
-	TicketID             int64  `json:"ticketid" pg:"ticketid"`
-	OpenedByUserID       int64  `json:"userid" pg:"userid"`
-	OpenedByTeamID       int    `pg:"teamid"`
-	Opened               int64  `pg:"openednano"`
-	Title                string `json:"title"`
-	Contents             string `json:"content"`
-	BroadcastTeam        bool
-	InformUserIDs        []int64 // user IDs to which to send the event by email
-	EmailTo              []string
-	EmailCC              []string
-	UploadedFilesIDs     []int64 `pg:"filesid"`       // id of files uploaded with event
-	AssignedResourcesIDs []int64 `pg:"assignresoid"`  // id of resources assigned with event
-	ReleasedResourceIDs  []int64 `pg:"releaseresoid"` // id of resources released with event
-}
-
 // CRUD - C
 
 // AddEvent adds event to DB. the ID of inserted row is populated after insert in the ID column.
