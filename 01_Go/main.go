@@ -1,13 +1,19 @@
 package main
 
 import (
+	"./database"
+
 	"github.com/go-pg/pg"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
-const port = "1323"
-const uploadFolder = "public/uploads/"
+const {
+	port = "1323"
+uploadFolder = "public/uploads/"
+}
+
+
 
 var blog *Blog
 var db *pg.DB

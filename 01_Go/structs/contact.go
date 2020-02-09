@@ -1,5 +1,6 @@
 package structs
 
+// Contact is used when defining a app user. The app user could have more than one contact.
 type Contact struct {
 	ID             int64
 	UserID         int64  `pg:"userid"`

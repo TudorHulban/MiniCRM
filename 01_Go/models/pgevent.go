@@ -2,31 +2,35 @@ package models
 
 import (
 	"time"
+
+	f "../interfaces"
+	s "../structs"
 )
 
-// CRUD - C
+// File defines Event type for Pg persistance.
 
-// AddEvent adds event to DB. the ID of inserted row is populated after insert in the ID column.
-func (b *Blog) AddEvent(pEvent *Event) error {
+// Eventpg type would satisfy RDBMSEvent interface.
+type Eventpg s.Event
+
+// AddEvent adds event to Pg. the ID of inserted row is populated after insert in the ID column.
+func (*Eventpg) Add(pEvent *Eventpg, pUser f.RDBMSUser) error {
 	pEvent.Opened = time.Now().UnixNano()
 
-	u, errGetUser := b.GetUserByPK(pEvent.OpenedByUserID)
+	u, errGetUser := pUser.GetUserByPK(pEvent.OpenedByUserID)
 	if errGetUser != nil {
 		return errGetUser
 	}
 	pEvent.OpenedByTeamID = u.TeamID
-	return b.DBConn.Insert(pEvent)
+	return pUser.DBConn.Insert(pEvent)
 }
 
-// CRUD - R
-
-func (b *Blog) GetEventbyPK(pID int64) (Event, error) {
+func (*Eventpg) GetEventbyPK(pID int64) (s.Event, error) {
 	result := Event{ID: pID}
 	errSelect := b.DBConn.Select(&result)
 	return result, errSelect
 }
 
-func (b *Blog) GetEventsByTicketID(pID int64, pHowMany int) ([]Event, error) {
+func (b *Eventpg) GetEventsByTicketID(pID int64, pHowMany int) ([]Event, error) {
 	var result []Event
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -47,7 +51,7 @@ func (b *Blog) GetEventsByTicketID(pID int64, pHowMany int) ([]Event, error) {
 }
 
 // GetUserPosts fetches posts for specific user, reverse order, latest first.
-func (b *Blog) GetEventsByUserID(pUserID int64, pHowMany int) ([]Event, error) {
+func (b *Eventpg) GetEventsByUserID(pUserID int64, pHowMany int) ([]Event, error) {
 	var result []Event
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -68,7 +72,7 @@ func (b *Blog) GetEventsByUserID(pUserID int64, pHowMany int) ([]Event, error) {
 }
 
 // GetLatestEvents fetches last posts from all users, reverse order, latest first. Security rights are taken into consideration.
-func (b *Blog) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]Event, error) {
+func (b *Eventpg) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]Event, error) {
 	var result []Event
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -88,7 +92,7 @@ func (b *Blog) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]Event, e
 	return result, errSelect
 }
 
-func (b *Blog) GetMaxIDEvents() (int64, error) {
+func (b *Eventpg) GetMaxIDEvents() (int64, error) {
 	var maxID struct {
 		Max int64
 	}
@@ -96,8 +100,6 @@ func (b *Blog) GetMaxIDEvents() (int64, error) {
 	return maxID.Max, errQuery
 }
 
-// CRUD - U
-
-func (b *Blog) UpdateEvent(pEvent *Event) error {
+func (b *Eventpg) UpdateEvent(pEvent *Event) error {
 	return b.DBConn.Update(pEvent)
 }
