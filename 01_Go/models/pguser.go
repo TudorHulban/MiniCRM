@@ -8,7 +8,6 @@ import (
 	s "../structs"
 
 	"github.com/go-pg/pg"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -146,18 +145,8 @@ func (u *Userpg) GetMaxIDUsers() (int64, error) {
 	return maxID.Max, errQuery
 }
 
-// CRUD - Update
-
 func (u *Userpg) UpdateUser(pUser *Userpg) error {
 	return b.DBConn.Update(pUser)
-}
-
-// getUserSecurityGroup receives the Pg ID of the user requesting the info and returns only the security group ID of the user.
-func getUserSecurityGroup(pDB *pg.DB, pID int64) (int64, error) {
-	result := new(UserPg)
-	result.ID = pID
-	errSelect := pDB.DBConn.Select(result)
-	return result.SecurityGroup
 }
 
 func getContactInfo(b *Blog, pUser *Userpg) error {

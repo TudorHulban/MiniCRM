@@ -34,11 +34,11 @@ func (*Filepg) Add(pFile *Filepg) error {
 	return errors.New("file does not exist")
 }
 
-func (b *Blog) Stream2RDBMS(pFile *File) error {
+func (*Filepg) Stream2RDBMS(pFile *s.File) error {
 	return b.DBConn.Insert(pFile)
 }
 
-func (b *Blog) GetMaxIDFiles() (int64, error) {
+func (*Filepg) GetMaxIDFiles() (int64, error) {
 	var maxID struct {
 		Max int64
 	}

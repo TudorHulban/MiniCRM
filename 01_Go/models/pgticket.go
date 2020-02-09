@@ -2,11 +2,14 @@ package models
 
 import (
 	"time"
+
+	s "../structs"
 )
 
-// CRUD - Create
+// Ticketpg type would satisfy RDBMSTicket interface.
+type Ticketpg s.Ticket
 
-func (b *Blog) AddTicket(pTicket *Ticket) error {
+func (*Ticketpg) Add(pTicket *s.Ticket) error {
 	pTicket.Opened = time.Now().UnixNano()
 	u, errGetUser := b.GetUserByPK(pTicket.OpenedByUserID)
 	if errGetUser != nil {
@@ -16,10 +19,8 @@ func (b *Blog) AddTicket(pTicket *Ticket) error {
 	return b.DBConn.Insert(pTicket)
 }
 
-// CRUD - Read
-
-func (b *Blog) GetLastTickets(pHowMany int) ([]Ticket, error) {
-	var result []Ticket
+func (*Ticketpg) GetLastTickets(pHowMany int) ([]s.Ticket, error) {
+	var result []s.Ticket
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
 		return result, errSelectRequester

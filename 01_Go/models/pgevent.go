@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	db "../database" // provides RDBMS connection
 	f "../interfaces"
 	s "../structs"
 )
@@ -21,58 +22,61 @@ func (*Eventpg) Add(pEvent *Eventpg, pUser f.RDBMSUser) error {
 		return errGetUser
 	}
 	pEvent.OpenedByTeamID = u.TeamID
-	return pUser.DBConn.Insert(pEvent)
+	return db.DBConn.Insert(pEvent)
 }
 
 func (*Eventpg) GetEventbyPK(pID int64) (s.Event, error) {
-	result := Event{ID: pID}
-	errSelect := b.DBConn.Select(&result)
+	result := s.Event{ID: pID}
+	errSelect := db.DBConn.Select(&result)
 	return result, errSelect
 }
 
-func (b *Eventpg) GetEventsByTicketID(pID int64, pHowMany int) ([]Event, error) {
-	var result []Event
-	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
-	if errSelectRequester != nil {
-		return result, errSelectRequester
+// GetEventsByTicketID provides events for a ticket regardless of user. Should add user ID for security.
+func (*Eventpg) GetEventsByTicketID(pTicketID int64, pHowMany int) ([]s.Event, error) {
+	var result []s.Event
+	var security f.RDBMSSecurity
+	securityGroupID, teamID, errSecurity := security.GetSecurity(int64(1))
+	if errSecurity != nil {
+		return result, errSecurity
 	}
 	var errSelect error
-	switch requester.SecurityGroup {
+	switch securityGroupID {
 	case 1:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Where("ticketid = ?", pID).Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("ticketid = ?", pTicketID).Limit(pHowMany).Select()
 		}
 	default:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", requester.TeamID).Where("ticketid = ?", pID).Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", teamID).Where("ticketid = ?", pTicketID).Limit(pHowMany).Select()
 		}
 	}
 	return result, errSelect
 }
 
-// GetUserPosts fetches posts for specific user, reverse order, latest first.
-func (b *Eventpg) GetEventsByUserID(pUserID int64, pHowMany int) ([]Event, error) {
-	var result []Event
-	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
-	if errSelectRequester != nil {
-		return result, errSelectRequester
+// GetEventsByUserID fetches posts for specific user, reverse order, latest first.
+func (*Eventpg) GetEventsByUserID(pUserID int64, pHowMany int) ([]s.Event, error) {
+	var result []s.Event
+	var security f.RDBMSSecurity
+	securityGroupID, teamID, errSecurity := security.GetSecurity(pUserID)
+	if errSecurity != nil {
+		return result, errSecurity
 	}
 	var errSelect error
-	switch requester.SecurityGroup {
+	switch securityGroupID {
 	case 1:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Where("userid = ?", pUserID).Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("userid = ?", pUserID).Limit(pHowMany).Select()
 		}
 	default:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", requester.TeamID).Where("userid = ?", pUserID).Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", requester.TeamID).Where("userid = ?", pUserID).Limit(pHowMany).Select()
 		}
 	}
 	return result, errSelect
 }
 
 // GetLatestEvents fetches last posts from all users, reverse order, latest first. Security rights are taken into consideration.
-func (b *Eventpg) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]Event, error) {
+func (*Eventpg) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]s.Event, error) {
 	var result []Event
 	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
 	if errSelectRequester != nil {
@@ -100,6 +104,6 @@ func (b *Eventpg) GetMaxIDEvents() (int64, error) {
 	return maxID.Max, errQuery
 }
 
-func (b *Eventpg) UpdateEvent(pEvent *Event) error {
-	return b.DBConn.Update(pEvent)
+func (*Eventpg) UpdateEvent(pEvent *s.Event) error {
+	return db.DBConn.Update(pEvent)
 }
