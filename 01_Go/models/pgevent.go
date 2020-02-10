@@ -69,7 +69,7 @@ func (*Eventpg) GetEventsByUserID(pUserID int64, pHowMany int) ([]s.Event, error
 		}
 	default:
 		{
-			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", requester.TeamID).Where("userid = ?", pUserID).Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", teamID).Where("userid = ?", pUserID).Limit(pHowMany).Select()
 		}
 	}
 	return result, errSelect
@@ -77,30 +77,31 @@ func (*Eventpg) GetEventsByUserID(pUserID int64, pHowMany int) ([]s.Event, error
 
 // GetLatestEvents fetches last posts from all users, reverse order, latest first. Security rights are taken into consideration.
 func (*Eventpg) GetLatestEvents(pRequesterUserID int64, pHowMany int) ([]s.Event, error) {
-	var result []Event
-	requester, errSelectRequester := getRequesterSecurityGroup(b, 1)
-	if errSelectRequester != nil {
-		return result, errSelectRequester
+	var result []s.Event
+	var security f.RDBMSSecurity
+	securityGroupID, teamID, errSecurity := security.GetSecurity(pRequesterUserID)
+	if errSecurity != nil {
+		return result, errSecurity
 	}
 	var errSelect error
-	switch requester.SecurityGroup {
+	switch securityGroupID {
 	case 1:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Limit(pHowMany).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Limit(pHowMany).Select()
 		}
 	default:
 		{
-			errSelect = b.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", requester.TeamID).Select()
+			errSelect = db.DBConn.Model(&result).Order("id DESC").Where("teamid = ?", teamID).Select()
 		}
 	}
 	return result, errSelect
 }
 
-func (b *Eventpg) GetMaxIDEvents() (int64, error) {
+func (*Eventpg) GetMaxIDEvents() (int64, error) {
 	var maxID struct {
 		Max int64
 	}
-	_, errQuery := b.DBConn.QueryOne(&maxID, "select max(id) from posts")
+	_, errQuery := db.DBConn.QueryOne(&maxID, "select max(id) from posts")
 	return maxID.Max, errQuery
 }
 

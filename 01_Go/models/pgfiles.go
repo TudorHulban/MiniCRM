@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 
+	db "../database" // provides RDBMS connection
+
 	s "../structs"
 )
 
@@ -29,19 +31,19 @@ func (*Filepg) Add(pFile *Filepg) error {
 		content, _ := ioutil.ReadAll(bufio.NewReader(f))
 
 		pFile.Content = encode64Bytes(content)
-		return b.DBConn.Insert(pFile)
+		return db.DBConn.Insert(pFile)
 	}
 	return errors.New("file does not exist")
 }
 
 func (*Filepg) Stream2RDBMS(pFile *s.File) error {
-	return b.DBConn.Insert(pFile)
+	return db.DBConn.Insert(pFile)
 }
 
 func (*Filepg) GetMaxIDFiles() (int64, error) {
 	var maxID struct {
 		Max int64
 	}
-	_, errQuery := b.DBConn.QueryOne(&maxID, "select max(id) from files")
+	_, errQuery := db.DBConn.QueryOne(&maxID, "select max(id) from files")
 	return maxID.Max, errQuery
 }
